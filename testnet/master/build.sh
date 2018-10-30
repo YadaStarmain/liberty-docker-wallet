@@ -17,4 +17,3 @@ docker run -d -P --name wallet_master --net liberty_net -v ~/liberty_wallet:/var
 # TO DISCONECT FROM THE CONTAINER AFTER YOU CONNECT WITHOUT KILLING IT USE <CTRL-P> <CTRL-Q>
 # docker exec -it wallet_master /bin/bash or docker exec -it firstnode_master /bin/bash
 
--v ~/liberty_wallet:/var/share/liberty_wallet
