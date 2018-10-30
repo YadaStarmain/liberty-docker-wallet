@@ -50,8 +50,7 @@ COPY startnode.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/startnode.sh
 
-RUN cp /root/wallet/src/libertyd /usr/local/bin/ && \
-    cp /root/cpuminer-multi/cpuminer /usr/local/bin/ && \
+RUN cp /root/cpuminer-multi/cpuminer /usr/local/bin/ && \
     rm -rf /root/wallet && \
     rm -rf /root/cpuminer-multi
 
