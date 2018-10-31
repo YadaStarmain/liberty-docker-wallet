@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/local/bin/libertyd
+/usr/local/bin/libertyd -debug
