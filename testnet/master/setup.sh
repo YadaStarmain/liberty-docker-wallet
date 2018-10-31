@@ -6,6 +6,7 @@ sudo usermod -aG docker root
 
 
 cd ~; mkdir src; cd src
+mkdir data
 git clone https://github.com/YadaStarmain/liberty-docker-wallet.git
-cd liberty-docker-wallet/testnet/master
-sh ./build.sh
+# cd liberty-docker-wallet/testnet/master
+sh liberty-docker-wallet/testnet/master/build.sh ./data

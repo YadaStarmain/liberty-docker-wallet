@@ -1,24 +1,23 @@
 #!/bin/bash
 
-docker network create liberty_net
+DATA_DIR=$1
 
 docker build compile -t liberty/compile:build
-
 docker create --name extract liberty/compile:build 
-docker cp extract:/root/cpuminer-multi/cpuminer ./cpuminer
-docker cp extract:/root/wallet/src/libertyd ./libertyd
-docker cp extract:/root/wallet/src/liberty-cli ./liberty-cli
-docker cp extract:/root/wallet/src/liberty-tx ./liberty-tx
+docker cp extract:/root/cpuminer-multi/cpuminer $DATA_DIR/cpuminer
+docker cp extract:/root/wallet/src/libertyd $DATA_DIR/libertyd
+docker cp extract:/root/wallet/src/liberty-cli $DATA_DIR/liberty-cli
+docker cp extract:/root/wallet/src/liberty-tx $DATA_DIR/liberty-tx
 docker rm -f extract
 
-cd ./firstnode
-docker build . -t firstnode_master
+docker network create liberty_net
+
+docker build firstnode --build-arg data_dir=$DATA_DIR -t firstnode_master
 docker run -d --name firstnode_master --net liberty_net -v ~/liberty_wallet:/var/share/liberty_wallet firstnode_master
 echo "BUILD OF FIRSTNODE COMPLETE, CHECKING RUNNING CONTAINERS:"
 docker ps
 
-cd ../wallet
-docker build . -t wallet_master
+docker build wallet -t wallet_master
 echo "BUILD OF WALLET COMPLETE, CHECKING RUNNING CONTAINERS:"
 docker run -d -P --name wallet_master --net liberty_net -v ~/liberty_wallet:/var/share/liberty_wallet wallet_master
 

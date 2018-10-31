@@ -35,5 +35,5 @@ RUN cd wallet && ./autogen.sh
 
 RUN cd wallet && ./configure
 
-RUN cd wallet && make && make install
+RUN cd wallet && make
 

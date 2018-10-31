@@ -1,5 +1,9 @@
 FROM ubuntu:18.04
 
+ARG data_dir
+
+RUN echo "data_dir = $data_dir"
+
 WORKDIR /root
 
 RUN apt-get update -qq
@@ -15,10 +19,6 @@ RUN apt-get install -qq -y iputils-ping
 
 RUN apt-get install -qq -y curl
 
-RUN git clone https://github.com/tpruvot/cpuminer-multi -b linux
-
-RUN cd cpuminer-multi && ./build.sh
-
 RUN apt-add-repository ppa:bitcoin/bitcoin
 
 RUN apt-get update
@@ -26,16 +26,6 @@ RUN apt-get update
 RUN apt-get install -y libdb4.8-dev libdb4.8++-dev
 
 RUN apt-get install -y libssl1.0-dev
-
-RUN git clone https://github.com/project-liberty/wallet.git
-
-RUN cd wallet && git checkout master && git pull
-
-RUN cd wallet && ./autogen.sh
-
-RUN cd wallet && ./configure
-
-RUN cd wallet && make && make install
 
 VOLUME ["/root/.liberty"]
 
@@ -50,9 +40,7 @@ COPY startnode.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/startnode.sh
 
-RUN cp /root/cpuminer-multi/cpuminer /usr/local/bin/ && \
-    rm -rf /root/wallet && \
-    rm -rf /root/cpuminer-multi
+COPY $data_dir/* /usr/local/bin/
 
 EXPOSE 20416
 EXPOSE 20417
