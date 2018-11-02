@@ -1,5 +1,11 @@
 FROM ubuntu:18.04
 
+ARG data_dir
+ARG conf_dir
+
+RUN echo "data_dir = $data_dir"
+RUN echo "conf_dir = $conf_dir"
+
 WORKDIR /root
 
 RUN apt-get update 
@@ -34,7 +40,7 @@ COPY ${conf_dir}/startnode.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/startnode.sh
 
-RUN rm -rf /root/wallet
+COPY ${data_dir} /usr/local/bin/
 
 EXPOSE 20416
 EXPOSE 20417
