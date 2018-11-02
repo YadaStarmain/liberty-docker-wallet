@@ -1,8 +1,10 @@
 FROM ubuntu:18.04
 
 ARG data_dir
+ARG conf_dir
 
 RUN echo "data_dir = $data_dir"
+RUN echo "conf_dir = $conf_dir"
 
 WORKDIR /root
 
@@ -10,7 +12,7 @@ RUN apt-get update -qq
 
 RUN apt-get install -qqy automake autoconf libcurl4-openssl-dev libssl-dev pkg-config libjansson-dev libgmp-dev make \
     g++ git build-essential libtool autotools-dev pkg-config libboost-all-dev libqrencode-dev \
-    openssl libevent-dev libminiupnpc-dev software-properties-common bsdmainutils screen
+    openssl libevent-dev libminiupnpc-dev software-properties-common bsdmainutils screen libsodium-dev libzmq3-dev
 
 #RUN apt-get install -y libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
 #RUN apt-get install -y net-tools
@@ -40,7 +42,7 @@ COPY startnode.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/startnode.sh
 
-COPY $data_dir/* /usr/local/bin/
+COPY ${data_dir} /usr/local/bin/
 
 EXPOSE 20416
 EXPOSE 20417
