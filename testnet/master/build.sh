@@ -1,5 +1,5 @@
 #!/bin/bash
-
+PWD=$(basename $0)
 DATA_DIR=$1
 
 docker build testnet/master/compile -t liberty/compile:build
