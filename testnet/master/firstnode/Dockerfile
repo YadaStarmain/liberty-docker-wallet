@@ -31,14 +31,14 @@ RUN apt-get install -qqy libssl1.0-dev
 
 VOLUME ["/root/.liberty"]
 
-COPY liberty.conf /root/.liberty/
+COPY ${conf_dir}/liberty.conf /root/.liberty/
 
 RUN chmod 600 /root/.liberty/liberty.conf && \ 
     chown root:root /root/.liberty/liberty.conf
 
-COPY .bash_aliases /root/
+COPY ${conf_dir}/.bash_aliases /root/
 
-COPY startnode.sh /usr/local/bin/
+COPY ${conf_dir}/startnode.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/startnode.sh
 
