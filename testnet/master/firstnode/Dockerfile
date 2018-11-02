@@ -23,11 +23,11 @@ RUN apt-get install -qq -y curl
 
 RUN apt-add-repository ppa:bitcoin/bitcoin
 
-RUN apt-get update
+RUN apt-get update -qqy
 
-RUN apt-get install -y libdb4.8-dev libdb4.8++-dev
+RUN apt-get install -qqy libdb4.8-dev libdb4.8++-dev
 
-RUN apt-get install -y libssl1.0-dev
+RUN apt-get install -qqy libssl1.0-dev
 
 VOLUME ["/root/.liberty"]
 
