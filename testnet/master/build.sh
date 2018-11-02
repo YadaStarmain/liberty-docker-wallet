@@ -2,13 +2,15 @@
 REALPATH=$(realpath $0)
 PWD=$(dirname $REALPATH)
 DATA_DIR=$(realpath $1)
+ROOT=`pwd`
 
+echo $ROOT
 echo $PWD
 echo $DATA_DIR
 
 [ ! -d "$DATA_DIR" ] && mkdir "$DATA_DIR"
 
-docker build $PWD/compile -t liberty/compile:build
+docker build -t $PWD/compile/Dockerfile -t liberty/compile:build .
 docker create --name extract liberty/compile:build
 docker cp extract:/root/cpuminer-multi/cpuminer $DATA_DIR/cpuminer
 docker cp extract:/root/wallet/src/libertyd $DATA_DIR/libertyd
