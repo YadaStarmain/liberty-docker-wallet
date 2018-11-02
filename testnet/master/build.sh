@@ -17,13 +17,15 @@ docker rm -f extract
 
 docker network create liberty_net
 
-echo docker build -f $PWD/firstnode/Dockerfile --build-arg data_dir=$DATA_DIR --build-arg conf_dir=$RELPATH/firstnode/ -t firstnode_master .
 docker build -f $PWD/firstnode/Dockerfile --build-arg data_dir=$DATA_DIR --build-arg conf_dir=$RELPATH/firstnode/ -t firstnode_master .
 docker run -d --name firstnode_master --net liberty_net -v ~/:/var/share/host firstnode_master
 echo "BUILD OF FIRSTNODE COMPLETE, CHECKING RUNNING CONTAINERS:"
 docker ps
 
-echo docker build -f $PWD/wallet/Dockerfile --build-arg data_dir=$DATA_DIR --build-arg conf_dir=$RELPATH/wallet/ -t wallet_master .
 docker build -f $PWD/wallet/Dockerfile --build-arg data_dir=$DATA_DIR --build-arg conf_dir=$RELPATH/wallet/ -t wallet_master .
 echo "BUILD OF WALLET COMPLETE, CHECKING RUNNING CONTAINERS:"
 docker run -d -P --name wallet_master --net liberty_net -v ~/:/var/share/host wallet_master
+
+# IF YOU WANT TO CONNECT TO ONE OF THE CONTAINERS CLI TO CHECK ON THINGS USE THE FOLLOWING COMMANDS
+# TO DISCONECT FROM THE CONTAINER AFTER YOU CONNECT WITHOUT KILLING IT USE <CTRL-P> <CTRL-Q>
+# docker exec -it wallet_master /bin/bash or docker exec -it firstnode_master /bin/bash
