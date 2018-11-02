@@ -1,14 +1,14 @@
 #!/bin/bash
 REALPATH=$(realpath $0)
 PWD=$(dirname $REALPATH)
-DATA_DIR=$(realpath $1)
+DATA_DIR=$(basename $1)
 ROOT=`pwd`
 
 echo $ROOT
 echo $PWD
 echo $DATA_DIR
 
-[ ! -d "$DATA_DIR" ] && mkdir "$DATA_DIR"
+[ -d "$DATA_DIR" ] && rm -r "$DATA_DIR" && mkdir "$DATA_DIR"
 
 docker build -f $PWD/compile/Dockerfile -t liberty/compile:build .
 docker create --name extract liberty/compile:build
@@ -25,7 +25,7 @@ docker run -d --name firstnode_master --net liberty_net -v ~/:/var/share/host fi
 echo "BUILD OF FIRSTNODE COMPLETE, CHECKING RUNNING CONTAINERS:"
 docker ps
 
-docker build $PWD/wallet -t --build-arg data_dir=$DATA_DIR wallet_master
+docker build -f $PWD/wallet/Dockerfile --build-arg data_dir=$DATA_DIR --build-arg conf_dir=$PWD/wallet/ -t wallet_master
 echo "BUILD OF WALLET COMPLETE, CHECKING RUNNING CONTAINERS:"
 docker run -d -P --name wallet_master --net liberty_net -v ~/:/var/share/host wallet_master
 
