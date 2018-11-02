@@ -2,7 +2,7 @@
 
 DATA_DIR=$1
 
-docker build compile -t liberty/compile:build
+docker build testnet/master/compile -t liberty/compile:build
 docker create --name extract liberty/compile:build 
 docker cp extract:/root/cpuminer-multi/cpuminer $DATA_DIR/cpuminer
 docker cp extract:/root/wallet/src/libertyd $DATA_DIR/libertyd
